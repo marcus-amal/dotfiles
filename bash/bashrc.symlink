@@ -110,3 +110,23 @@ export PATH=/opt/homebrew/bin:$PATH
 alias python='python3'
 export GARDEN_LOGGER_TYPE=basic
 
+activatepy() {
+    # Path to your ATT directory
+    local WORKSPACE="~/all-the-things"
+    local dt="$1"
+    local python_version="$2"
+
+    if [[ "$python_version" -eq 3 ]]; then
+        pushd "$WORKSPACE/deployable/$dt"
+        make requirements
+        make dev
+        source "$WORKSPACE/deployable/$dt/src/.venv3/bin/activate"
+        popd
+    else
+        pushd "$WORKSPACE/deployable/$dt"
+        make requirements
+        make dev
+        source "$WORKSPACE/deployable/$dt/src/.venv39/bin/activate"
+        popd
+    fi
+}
