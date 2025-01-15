@@ -112,7 +112,7 @@ export GARDEN_LOGGER_TYPE=basic
 
 activatepy() {
     # Path to your ATT directory
-    local WORKSPACE="~/all-the-things"
+    local WORKSPACE="/workspace/all-the-things"
     local dt="$1"
     local python_version="$2"
 
