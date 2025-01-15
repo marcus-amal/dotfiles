@@ -12,7 +12,7 @@ dotfs=$(cd $(dirname $0) && pwd)
 
 sym "$dotfs"
 
-git clone git@github.com:oakeyc/SecretDotfiles.git ~/.dotfiles/SecretDotfiles
+git clone git@github.com:marcus-amal/SecretDotfiles.git ~/.dotfiles/SecretDotfiles
 
 export PATH=$PATH:~/.dotfiles/SecretDotfiles
 
