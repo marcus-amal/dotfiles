@@ -130,3 +130,32 @@ activatepy() {
         popd
     fi
 }
+
+
+clean_old_intellij_servers() {
+  echo "🧹 Cleaning up old IntelliJ Remote Dev servers..."
+
+  # Gather info: PID + Folder path
+  ps -eo pid,lstart,cmd | grep 'remoteDevHost' | grep -oP '^\s*\d+|\s+/workspace/[^ ]+' | paste - - > /tmp/intellij_processes.txt
+
+  # Loop over each unique deployable folder
+  cut -f2 /tmp/intellij_processes.txt | sort | uniq | while read folder; do
+    echo ""
+    echo "📂 Checking: $folder"
+    grep "$folder" /tmp/intellij_processes.txt | sort | awk '{print $1}' > /tmp/pids_to_consider.txt
+    total=$(wc -l < /tmp/pids_to_consider.txt)
+
+    if [ "$total" -gt 1 ]; then
+      echo "  Found $total sessions. Keeping latest, killing others..."
+      head -n -1 /tmp/pids_to_consider.txt | while read pid; do
+        echo "    🔪 Killing PID $pid"
+        kill "$pid"
+      done
+    else
+      echo "  Only one session running — all good 👍"
+    fi
+  done
+
+  echo ""
+  echo "✅ All done."
+}
