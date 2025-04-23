@@ -145,16 +145,13 @@ clean_old_intellij_servers() {
     grep "$folder" /tmp/intellij_processes.txt | sort | awk '{print $1}' > /tmp/pids_to_consider.txt
     total=$(wc -l < /tmp/pids_to_consider.txt)
 
-    if [ "$total" -gt 1 ]; then
-      echo "  Found $total sessions. Keeping latest, killing others..."
-      head -n -1 /tmp/pids_to_consider.txt | while read pid; do
-        echo "    🔪 Killing PID $pid"
-        kill "$pid"
-      done
-    else
-      echo "  Only one session running — all good 👍"
-    fi
-  done
+    
+    echo "  Found $total sessions. Keeping latest, killing others..."
+    head -n -1 /tmp/pids_to_consider.txt | while read pid; do
+      echo "    🔪 Killing PID $pid"
+      kill "$pid"
+    done
+    
 
   echo ""
   echo "✅ All done."
