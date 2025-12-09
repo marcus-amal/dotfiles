@@ -151,14 +151,8 @@ clean_old_intellij_servers() {
       echo "    🔪 Killing PID $pid"
       kill "$pid"
     done
-    
+  done
 
   echo ""
   echo "✅ All done."
 }
-
-
-
-# Affirm MCP env
-[ -f "$HOME/.config/affirm/mcp.env" ] && set -a && . "$HOME/.config/affirm/mcp.env" && set +a
-
